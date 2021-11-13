@@ -1,3 +1,125 @@
 html {
   font-family: sans-serif;
+  --border-width: 0.5rem;
+  --primary-color: dimgray;
+  --secondary-color: snow;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+div, ul, li, button {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  user-select: none;
+
+  &:focus-visible {
+    outline: solid calc(0.5 * var(--border-width)) var(--primary-color);
+    outline-offset: 5px;
+  }
+}
+
+.board {
+  --gap: 2rem;
+  --border-radius: 1rem;
+  --number-of-columns: 6;
+  flex: 0 0 auto;
+  margin: auto;
+  padding: var(--gap);
+  display: grid;
+  grid-template-columns: repeat(var(--number-of-columns), 1fr);
+  gap: var(--gap);
+  justify-content: center;
+  justify-items: stretch;
+}
+
+.slot {
+  --slot-border-width: 2px;
+  min-width: 11rem;
+  min-height: 7rem;
+  border: dashed var(--slot-border-width) silver;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  perspective: 500px;
+}
+
+.card {
+  position: relative;
+  flex: 1 1 100%;
+  margin: calc(-1 * var(--slot-border-width));
+  border: solid var(--border-width) #0004;
+  border-radius: var(--border-radius);
+  background-color: var(--color);
+  padding: 0;
+  color: var(--label-color);
+  font-size: 1em;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-in-out;
+
+  &.face-down {
+    transform: rotateY(0.5turn);
+  }
+
+  &::after {
+    content: '?';
+    position: absolute;
+    inset: 0;
+    margin: calc(-1 * var(--border-width));
+    border-radius: inherit;
+    background-color: var(--primary-color);
+    color: lightgray;
+    font-size: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(0.5turn) translateZ(0.01px);
+  }
+
+  &.removing {
+    box-shadow: 0 0 200px black;
+    transform: translate3d(-150vw, -20vh, 150px) rotateZ(0.75turn);
+    transition: 0.75s ease-in;
+    transition-property: transform, box-shadow;
+  }
+}
+
+.play-again {
+  flex: 0 0 auto;
+  margin: auto;
+}
+
+.play-again-button {
+  border: solid var(--border-width) var(--primary-color);
+  border-radius: 2rem;
+  padding: 0.5em 1em;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  text-transform: lowercase;
+  font-size: 5rem;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+
+  &:hover,
+  &:focus {
+    outline-offset: 5px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+  }
 }
